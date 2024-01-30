@@ -1,0 +1,34 @@
+/*Кнопка аватара*/
+.profile__button-avatar {
+  background-color: black;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.profile__button-avatar::after {
+  content: "";
+  background-image: url(../../../images/profile-button-hover.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0;
+  visibility: hidden;
+}
+.profile__button-avatar:hover::after {
+  visibility: visible;
+  opacity: 0.8;
+}

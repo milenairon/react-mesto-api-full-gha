@@ -1,0 +1,23 @@
+/*Ссылка на Регистрация/Войти*/
+.header__link-another-page {
+  background: #000000;
+  border: none;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: right;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+.header__link-another-page:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 600px) {
+  .header__link-another-page {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

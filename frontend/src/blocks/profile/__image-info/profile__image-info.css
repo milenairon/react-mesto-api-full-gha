@@ -1,0 +1,11 @@
+/*Картинка кнопки info*/
+.profile__image-info {
+  max-height: 24px;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__image-info {
+    max-height: 18px;
+  }
+}

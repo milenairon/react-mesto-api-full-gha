@@ -1,0 +1,5 @@
+/*Галочка/крестик*/
+.popup__union-icon {
+  display: block;
+  margin: 26px auto 32px;
+}

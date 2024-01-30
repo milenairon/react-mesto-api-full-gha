@@ -1,0 +1,20 @@
+/*Уже зарегистрированы? Войти*/
+.popup__link-another-page {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 0;
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 44px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.popup__link-another-page:hover {
+  opacity: 0.6;
+}

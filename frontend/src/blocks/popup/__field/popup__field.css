@@ -1,0 +1,7 @@
+/*label с input и ошибкой*/
+.popup__field {
+  position: relative;
+  width: 100%;
+  top: 0;
+  left: 0;
+}

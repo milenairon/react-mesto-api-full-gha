@@ -1,0 +1,10 @@
+.popup_place_login {
+  content: none;
+  position: static;
+  background-color: rgb(0, 0, 0);
+  cursor: default;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  transition: 0s linear;
+}

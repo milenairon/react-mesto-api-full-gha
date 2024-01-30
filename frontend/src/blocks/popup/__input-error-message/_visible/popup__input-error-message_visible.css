@@ -1,0 +1,4 @@
+/*текст об ошибке: активное состояние*/
+.popup__input-error-message_visible {
+  opacity: 1;
+}

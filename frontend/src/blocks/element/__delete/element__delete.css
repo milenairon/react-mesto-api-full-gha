@@ -1,0 +1,12 @@
+/*Кнопка удаления*/
+.element__delete {
+  padding: 0;
+  align-self: self-end;
+  margin-left: 0;
+  border: 0;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: none;
+  cursor: pointer;
+}

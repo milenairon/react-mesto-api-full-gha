@@ -1,0 +1,10 @@
+/*Лайк-кнопка*/
+.element__like {
+  padding: 0;
+  border-width: 0;
+  background-color: white;
+  cursor: pointer;
+}
+.element__like:hover {
+  opacity: 0.6;
+}

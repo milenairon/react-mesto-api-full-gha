@@ -1,0 +1,15 @@
+/*Основной блок*/
+.page {
+  background-color: black;
+  max-width: 918px;
+  margin: 0 auto;
+  padding: 45px 19px 60px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 600px) {
+  .page {
+    max-width: 320px;
+    padding: 28px 19px 36px;
+  }
+}

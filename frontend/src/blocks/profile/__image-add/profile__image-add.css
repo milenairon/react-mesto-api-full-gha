@@ -1,0 +1,10 @@
+/*Картинка кнопки add*/
+.profile__image-add {
+  min-width: 22px;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__image-add {
+    min-width: 17px;
+  }
+}

@@ -1,0 +1,18 @@
+/*Заголовок карточки*/
+.element__title {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0;
+  max-width: 294px;
+  /*Ниже обрезаем длинный текст и вставляем многоточие*/
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+  .elements {
+    max-width: 189px;
+  }
+}

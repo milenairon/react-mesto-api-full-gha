@@ -1,0 +1,13 @@
+/*Затемнение фона*/
+.popup_place_image {
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 90px 80px 68px 40px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 600px) {
+  .popup_place_image {
+    padding: 90px 40px 68px 40px;
+  }
+}
+

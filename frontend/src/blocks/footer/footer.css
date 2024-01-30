@@ -1,0 +1,11 @@
+/*Блок*/
+.footer {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  margin-top: 67px;
+}
+
+@media screen and (max-width: 600px) {
+  .footer {
+    margin-top: 48px;
+  }
+}

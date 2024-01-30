@@ -1,0 +1,16 @@
+/*Картинка крестика*/
+.popup__close-icon {
+  max-width: 32px;
+  aspect-ratio: 1/1;
+  vertical-align: middle;
+}
+
+.popup__close-icon:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__close-icon {
+    max-width: 20px;
+  }
+}

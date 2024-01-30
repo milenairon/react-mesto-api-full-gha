@@ -1,0 +1,10 @@
+/*Имя*/
+.popup__name {
+  margin: 54px 0 0;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__name {
+    margin: 75px 0 0;
+  }
+}

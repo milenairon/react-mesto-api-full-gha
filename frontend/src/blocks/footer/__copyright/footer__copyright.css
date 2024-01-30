@@ -1,0 +1,18 @@
+/*Надпись*/
+.footer__copyright {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+  .footer__copyright {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
