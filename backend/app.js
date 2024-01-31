@@ -10,12 +10,12 @@ const cors = require("cors");
 
 const app = express();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const mongoose = require("mongoose");
 const auth = require("./middlewares/auth");
 const { login, createUser } = require("./controllers/users");
-// const limiter = require("./middlewares/rateLimiter");
+const limiter = require("./middlewares/rateLimiter");
 const NotFoundError = require("./errors/NotFoundError");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
@@ -24,7 +24,7 @@ const handleErrors = require("./middlewares/handleErrors");
 app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
-// app.use(limiter);
+app.use(limiter);
 
 // Подключаемся к серверу Mongo
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb");
