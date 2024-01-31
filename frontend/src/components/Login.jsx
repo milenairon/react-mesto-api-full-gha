@@ -1,4 +1,4 @@
-//path="/sign-in"
+//path="/signin"
 import AuthPage from "./AuthPage";
 
 export default function Login({

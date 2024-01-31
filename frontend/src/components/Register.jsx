@@ -1,4 +1,4 @@
-//Регистрация path="/sign-in"
+//Регистрация path="/signin"
 import React from "react";
 import { Link } from "react-router-dom";
 import AuthPage from "./AuthPage";
@@ -19,7 +19,7 @@ export default function Register({
       email={email}
       password={password}
     >
-      <Link className="popup__link-another-page" to="/sign-in">
+      <Link className="popup__link-another-page" to="/signin">
         Уже зарегистрированы? Войти
       </Link>
     </AuthPage>

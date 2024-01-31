@@ -1,16 +1,18 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 const MONGO_DUBLICATE_ERROR_CODE = 11000;
 const SOLT_ROUND = 10;
-const { HTTP_STATUS_CREATED } = require('http2').constants; // 201
+const { HTTP_STATUS_CREATED } = require("http2").constants; // 201
 
-const jwt = require('jsonwebtoken');
+const JWT_SECRET = "3f679f11153b904768aaad9d8359fe88";
+
+const jwt = require("jsonwebtoken");
 // const { MongoServerError } = require("mongodb");
-const User = require('../models/user');
-const BadRequestError = require('../errors/BadRequestError'); // 400
-const UnauthorizedError = require('../errors/UnauthorizedError'); // 401
-const NotFoundError = require('../errors/NotFoundError'); // 404
-const ConflictError = require('../errors/ConflictError'); // 409
+const User = require("../models/user");
+const BadRequestError = require("../errors/BadRequestError"); // 400
+const UnauthorizedError = require("../errors/UnauthorizedError"); // 401
+const NotFoundError = require("../errors/NotFoundError"); // 404
+const ConflictError = require("../errors/ConflictError"); // 409
 
 // КОНТРОЛЛЕРЫ
 
@@ -46,7 +48,7 @@ const getCurrentUser = (req, res, next) => {
 const getUserById = (req, res, next) => {
   const { userId } = req.params;
   User.findById(userId)
-    .orFail(() => new NotFoundError('Пользователь по указанному _id не найден'))
+    .orFail(() => new NotFoundError("Пользователь по указанному _id не найден"))
     .then((user) => {
       res.send({
         name: user.name,
@@ -58,13 +60,13 @@ const getUserById = (req, res, next) => {
     })
     .catch((err) => {
       switch (err.name) {
-        case 'NotFoundError':
+        case "NotFoundError":
           return next(new NotFoundError(err.message));
-        case 'CastError':
+        case "CastError":
           return next(
             new BadRequestError(
-              'Переданы некорректные данные при обновлении профиля',
-            ),
+              "Переданы некорректные данные при обновлении профиля"
+            )
           );
 
         default:
@@ -73,13 +75,11 @@ const getUserById = (req, res, next) => {
     });
 };
 
-// Создаёт пользователя (Регистрация)
+// Создаёт пользователя (Регистрация /signup)
 const createUser = async (req, res, next) => {
   // получим из объекта запроса данные пользователя
   try {
-    const {
-      name, about, avatar, email, password,
-    } = req.body || {};
+    const { name, about, avatar, email, password } = req.body || {};
     const hash = await bcrypt.hash(password, SOLT_ROUND);
     const newUser = await User.create({
       name,
@@ -97,19 +97,18 @@ const createUser = async (req, res, next) => {
     });
   } catch (err) {
     if (
-      err.code === MONGO_DUBLICATE_ERROR_CODE
-      || err.name === 'MongoServerError'
+      err.code === MONGO_DUBLICATE_ERROR_CODE || err.name === "MongoServerError"
     ) {
       next(
         new ConflictError(
-          'При регистрации указан email, который уже существует на сервере',
-        ),
+          "При регистрации указан email, который уже существует на сервере"
+        )
       );
-    } else if (err.name === 'ValidationError') {
+    } else if (err.name === "ValidationError") {
       next(
-        new BadRequestError('Переданы некорректные данные при создании профиля'),
+        new BadRequestError("Переданы некорректные данные при создании профиля")
       );
-    } else if (err.name === 'NotFoundError') {
+    } else if (err.name === "NotFoundError") {
       next(new NotFoundError(err.message));
     } else {
       next(err);
@@ -124,9 +123,9 @@ const updateUser = (req, res, next) => {
   User.findByIdAndUpdate(
     userId,
     { name, about },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   )
-    .orFail(() => new NotFoundError('Пользователь по указанному _id не найден'))
+    .orFail(() => new NotFoundError("Пользователь по указанному _id не найден"))
     .then((user) => {
       res.send({
         name: user.name,
@@ -137,19 +136,19 @@ const updateUser = (req, res, next) => {
     })
     .catch((err) => {
       switch (err.name) {
-        case 'CastError':
+        case "CastError":
           return next(
             new BadRequestError(
-              'Переданы некорректные данные при обновлении профиля',
-            ),
+              "Переданы некорректные данные при обновлении профиля"
+            )
           );
-        case 'ValidationError':
+        case "ValidationError":
           return next(
             new BadRequestError(
-              'Переданы некорректные данные при обновлении профиля',
-            ),
+              "Переданы некорректные данные при обновлении профиля"
+            )
           );
-        case 'NotFoundError':
+        case "NotFoundError":
           return next(new NotFoundError(err.message));
 
         default:
@@ -163,7 +162,7 @@ const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   const userId = req.user._id;
   User.findByIdAndUpdate(userId, { avatar }, { new: true, runValidators: true })
-    .orFail(() => new NotFoundError('Пользователь по указанному _id не найден'))
+    .orFail(() => new NotFoundError("Пользователь по указанному _id не найден"))
     .then((user) => {
       res.send({
         name: user.name,
@@ -174,19 +173,19 @@ const updateAvatar = (req, res, next) => {
     })
     .catch((err) => {
       switch (err.name) {
-        case 'ValidationError':
+        case "ValidationError":
           return next(
             new BadRequestError(
-              'Переданы некорректные данные при обновлении аватара',
-            ),
+              "Переданы некорректные данные при обновлении аватара"
+            )
           );
-        case 'CastError':
+        case "CastError":
           return next(
             new BadRequestError(
-              'Переданы некорректные данные при обновлении аватара',
-            ),
+              "Переданы некорректные данные при обновлении аватара"
+            )
           );
-        case 'NotFoundError':
+        case "NotFoundError":
           return next(new NotFoundError(err.message));
 
         default:
@@ -195,7 +194,7 @@ const updateAvatar = (req, res, next) => {
     });
 };
 
-// Получает из запроса почту и пароль и проверяет их
+// Получает почту и пароль и проверяет их(/signin)
 const login = (req, res, next) => {
   // ищет по емаил пользователя
   const { email, password } = req.body;
@@ -203,12 +202,12 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        '3f679f11153b904768aaad9d8359fe88', // сгенерирован crypto
+        JWT_SECRET // сгенерирован crypto
       );
       res.send({ _id: token });
     })
     .catch(() => {
-      next(new UnauthorizedError('Передан неверный логин или пароль'));
+      next(new UnauthorizedError("Передан неверный логин или пароль"));
     });
 };
 

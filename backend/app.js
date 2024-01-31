@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const { celebrate, Joi, errors } = require("celebrate");
 // Заголовки безопасности проставляются автоматически(безопасность)
 const helmet = require("helmet");
+const cors = require("cors");
 
 const app = express();
 
@@ -20,6 +21,7 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const handleErrors = require("./middlewares/handleErrors");
 
+app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
 app.use(limiter);

@@ -1,4 +1,4 @@
-//path="/sign-in"
+//path="/signin"
 import React from "react";
 
 export default function AuthPage({

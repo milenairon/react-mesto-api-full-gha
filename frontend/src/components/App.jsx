@@ -219,7 +219,7 @@ export default function App() {
     if (jwt) {
       // проверим токен
       auth
-        .checkValidityToken(jwt)
+        .checkValidityToken()
         .then((res) => {
           if (res) {
             // авторизуем пользователя
@@ -258,7 +258,7 @@ export default function App() {
       .register(formValue.email, formValue.password)
       .then(() => {
         openInfoTooltipSuccess();
-        navigate("/sign-in");
+        navigate("/signin");
       })
       .catch(() => {
         openInfoTooltipFail();
@@ -296,7 +296,7 @@ export default function App() {
                 loggedIn ? (
                   <Navigate to="/main" replace />
                 ) : (
-                  <Navigate to="/sign-in" replace />
+                  <Navigate to="/signin" replace />
                 )
               }
             />
@@ -307,7 +307,7 @@ export default function App() {
                   <Header
                     email={emailName}
                     anotherPage="Выйти"
-                    pathPage="/sign-in"
+                    pathPage="/signin"
                     onClick={handleLoggedInFalse}
                   />
                   <ProtectedRouteElement
@@ -326,7 +326,7 @@ export default function App() {
               }
             />
             <Route
-              path="/sign-in"
+              path="/signin"
               element={
                 <>
                   <Header anotherPage="Регистрация" pathPage="/sign-up" />
@@ -343,7 +343,7 @@ export default function App() {
               path="/sign-up"
               element={
                 <>
-                  <Header anotherPage="Войти" pathPage="/sign-in" />
+                  <Header anotherPage="Войти" pathPage="/signin" />
                   <Register
                     onSubmit={handleSubmitRegister}
                     handleChangeInput={handleChangeInput}

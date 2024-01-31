@@ -35,6 +35,7 @@ class Api {
   }
   //Получить все карточки
   getAllCards() {
+    console.log(localStorage.getItem("jwt"));
     return this._sendRequest(`${this._url}/cards`, {
       method: "GET",
       headers: this._headers,
@@ -78,9 +79,9 @@ class Api {
 }
 
 const api = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-76",
+  url: "http://localhost:3000",
   headers: {
-    authorization: "aeacf97e-5e0d-4830-af6d-c3921dcf63db",
+    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
     "Content-Type": "application/json",
   },
 });
