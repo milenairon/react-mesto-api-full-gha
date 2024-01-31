@@ -31,13 +31,16 @@ export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
-      Acecpt: "application/json",
+      // Acecpt: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
   })
     .then((res) => {
+      // console.log(`res ${res}`);
+      // console.log(res.json);
       if (res.ok) {
+        // console.log("try to return res.json");
         return res.json();
       } else if (res.status === 400) {
         console.log("Некорректно заполнено одно из полей");
@@ -48,8 +51,9 @@ export const authorize = (email, password) => {
       }
     })
     .then((data) => {
-      localStorage.setItem("jwt", data.token);
-      return data.token; // А НЕ ТОКЕН ЛИ НАДО ВЕРНУТЬ ЗДЕСЬ???
+      localStorage.setItem("jwt", data._id);
+      // console.log(data._id);
+      return data._id;
     });
 };
 

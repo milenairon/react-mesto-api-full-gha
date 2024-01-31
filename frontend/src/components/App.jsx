@@ -102,13 +102,13 @@ export default function App() {
   //поставить лайк
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id); // i._id === currentUser._id
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
       .changeLike(card._id, isLiked)
       .then((newCard) => {
         setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
+          state.map((c) => (c._id === card._id ? newCard.data : c))
         );
       })
       .catch((error) => {
@@ -164,7 +164,7 @@ export default function App() {
     api
       .createNewCard({ name, link })
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([newCard.data, ...cards]);
         closeAllPopups();
       })
       .catch((error) => {
@@ -185,31 +185,35 @@ export default function App() {
     }
   }, [isSomePopupOpen]);
 
-  //данные пользователя
+  // данные пользователя
   React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((user) => {
-        setCurrentUser(user);
-      })
-      .catch((error) => {
-        //если запрос не ушел
-        console.log(error);
-      });
-  }, []);
+    if (loggedIn) {
+      api
+        .getUserInfo()
+        .then((user) => {
+          setCurrentUser(user);
+        })
+        .catch((error) => {
+          //если запрос не ушел
+          console.log(error);
+        });
+    }
+  }, [loggedIn]);
 
-  //вставляем карточки с сервера
+  // вставляем карточки с сервера
   React.useEffect(() => {
-    api
-      .getAllCards() //Получить все карточки
-      .then((cardList) => {
-        setCards(cardList);
-      })
-      .catch((error) => {
-        //если запрос не ушел
-        console.log(error);
-      });
-  }, []);
+    if (loggedIn) {
+      api
+        .getAllCards()
+        .then((cardList) => {
+          setCards(cardList.data);
+        })
+        .catch((error) => {
+          //если запрос не ушел
+          console.log(error);
+        });
+    }
+  }, [loggedIn]);
 
   //ПРОВЕРКА ТОКЕНА
   function tokenCheck() {
@@ -225,7 +229,7 @@ export default function App() {
             // авторизуем пользователя
             setLoggedIn(true);
             navigate("/main", { replace: true });
-            setEmailName(res.data.email);
+            setEmailName(res.email);
           }
         })
         .catch((error) => {
@@ -272,7 +276,6 @@ export default function App() {
       .authorize(formValue.email, formValue.password)
       .then((res) => {
         if (res) {
-          localStorage.setItem("jwt", res.token);
           setEmailName(formValue.email);
           setLoggedIn(true);
           navigate("/main", { replace: true });

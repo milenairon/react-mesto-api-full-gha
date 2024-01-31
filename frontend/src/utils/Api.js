@@ -35,7 +35,6 @@ class Api {
   }
   //Получить все карточки
   getAllCards() {
-    console.log(localStorage.getItem("jwt"));
     return this._sendRequest(`${this._url}/cards`, {
       method: "GET",
       headers: this._headers,

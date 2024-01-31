@@ -8,14 +8,11 @@ import elementImageLike from "../images/element-image-like.svg";
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   //данные меня
   const currentUser = React.useContext(CurrentUserContext);
-
   // Определяем, являемся ли мы владельцем текущей карточки
   //const isOwn = id автора карточки === id меня
-  const isOwn = card.owner._id === currentUser._id;
-
+  const isOwn = card.owner === currentUser._id;
   // Определяем, есть ли у карточки лайк, поставленный мной
-  const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
+  const isLiked = card.likes.some((i) => i === currentUser._id);
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardLikeButtonClassName = `element__image-like ${
     isLiked && "element__image-like_active"
