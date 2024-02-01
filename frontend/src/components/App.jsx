@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 //React
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";

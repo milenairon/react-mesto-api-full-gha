@@ -1,4 +1,4 @@
-export const BASE_URL = "http://api.milenairon.nomoredomainsmonster.ru";
+export const BASE_URL = "https://api.milenairon.nomoredomainsmonster.ru";
 
 //Зарегистрировать
 export const register = (email, password) => {
@@ -16,8 +16,10 @@ export const register = (email, password) => {
       } else if (res.status === 400) {
         console.log("Некорректно заполнено одно из полей");
         return Promise.reject(res.status);
+      } else if (res.status === 409) {
+        console.log("При регистрации указан email, который уже существует на сервере");
+        return Promise.reject(res.status);
       } else {
-        console.log(res);
         return Promise.reject(res.status);
       }
     })
@@ -31,7 +33,7 @@ export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
-      // Acecpt: "application/json",
+      Acecpt: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
