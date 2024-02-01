@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "http://api.milenairon.nomoredomainsmonster.ru";
 
 //Зарегистрировать
 export const register = (email, password) => {
@@ -37,10 +37,7 @@ export const authorize = (email, password) => {
     body: JSON.stringify({ email, password }),
   })
     .then((res) => {
-      // console.log(`res ${res}`);
-      // console.log(res.json);
       if (res.ok) {
-        // console.log("try to return res.json");
         return res.json();
       } else if (res.status === 400) {
         console.log("Некорректно заполнено одно из полей");
@@ -52,7 +49,6 @@ export const authorize = (email, password) => {
     })
     .then((data) => {
       localStorage.setItem("jwt", data._id);
-      // console.log(data._id);
       return data._id;
     });
 };

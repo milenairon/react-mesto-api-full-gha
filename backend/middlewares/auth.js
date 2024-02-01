@@ -2,6 +2,8 @@
 const jwt = require("jsonwebtoken");
 const UnauthorizedError = require("../errors/UnauthorizedError");
 
+const { NODE_ENV, JWT_SECRET } = require("../config");
+
 module.exports = (req, res, next) => {
   // достаём авторизационный заголовок(токен)
   const { authorization } = req.headers;
@@ -16,7 +18,10 @@ module.exports = (req, res, next) => {
 
   try {
     // Верифицируем токен
-    payload = jwt.verify(token, "3f679f11153b904768aaad9d8359fe88");
+    payload = jwt.verify(
+      token,
+      NODE_ENV === "production" ? JWT_SECRET : "dev-secret"
+    );
   } catch (err) {
     // отправим ошибку, если не получилось
     return next(new UnauthorizedError("Передан неверный логин или пароль"));

@@ -4,9 +4,8 @@ const MONGO_DUBLICATE_ERROR_CODE = 11000;
 const SOLT_ROUND = 10;
 const { HTTP_STATUS_CREATED } = require("http2").constants; // 201
 
-const JWT_SECRET = "3f679f11153b904768aaad9d8359fe88";
-
 const jwt = require("jsonwebtoken");
+const { NODE_ENV, JWT_SECRET } = require("../config");
 // const { MongoServerError } = require("mongodb");
 const User = require("../models/user");
 const BadRequestError = require("../errors/BadRequestError"); // 400
@@ -202,7 +201,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        JWT_SECRET // сгенерирован crypto
+        NODE_ENV === "production" ? JWT_SECRET : "dev-secret"
       );
       res.send({ _id: token });
     })

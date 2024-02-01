@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "npx eslint .",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "deploy": "npm run build && ssp -r ./build/* milena-iron@158.160.98.10:/home/milena-iron/frontend"
   },
   "author": "Elena Vasileva",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "celebrate": "^15.0.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "express-rate-limit": "^7.1.5",
     "express-winston": "^4.2.0",

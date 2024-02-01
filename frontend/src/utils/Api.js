@@ -1,7 +1,6 @@
 class Api {
-  constructor({ url, headers }) {
+  constructor({ url }) {
     this._url = url;
-    this._headers = headers;
   }
   _sendRequest(url, options) {
     return fetch(url, options).then((res) => {
@@ -17,7 +16,10 @@ class Api {
   getUserInfo() {
     return this._sendRequest(`${this._url}/users/me`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
     });
   }
 
@@ -26,7 +28,10 @@ class Api {
     return this._sendRequest(`${this._url}/users/me`, {
       //Метод PATCH обычно используют для обновления уже существующей инфы
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         name: name,
         about: job,
@@ -37,7 +42,10 @@ class Api {
   getAllCards() {
     return this._sendRequest(`${this._url}/cards`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
     });
   }
 
@@ -45,7 +53,10 @@ class Api {
   createNewCard(data) {
     return this._sendRequest(`${this._url}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     });
   }
@@ -54,7 +65,10 @@ class Api {
   deleteCard(id) {
     return this._sendRequest(`${this._url}/cards/${id}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
     });
   }
 
@@ -63,7 +77,10 @@ class Api {
     const method = !isLiked ? "PUT" : "DELETE";
     return this._sendRequest(`${this._url}/cards/${id}/likes`, {
       method: method,
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
     });
   }
 
@@ -71,18 +88,17 @@ class Api {
   setUserAvatar(avatar) {
     return this._sendRequest(`${this._url}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(avatar),
     });
   }
 }
 
 const api = new Api({
-  url: "http://localhost:3000",
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    "Content-Type": "application/json",
-  },
+  url: "http://api.milenairon.nomoredomainsmonster.ru", // "http://localhost:3002"
 });
 
 export default api;

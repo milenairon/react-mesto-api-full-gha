@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
 // Если запрос не проходит описанную валидацию,
@@ -11,23 +13,33 @@ const cors = require("cors");
 const app = express();
 
 const { PORT = 3001 } = process.env;
-
 const mongoose = require("mongoose");
 const auth = require("./middlewares/auth");
 const { login, createUser } = require("./controllers/users");
 const limiter = require("./middlewares/rateLimiter");
 const NotFoundError = require("./errors/NotFoundError");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
-
 const handleErrors = require("./middlewares/handleErrors");
+const { DB_ADDRESS } = require("./config");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://milenairon.nomoredomainsmonster.ru",
+      "http://api.milenairon.nomoredomainsmonster.ru",
+    ],
+    credentials: true,
+    maxAge: 30,
+  })
+);
 app.use(helmet());
 app.use(cookieParser());
 app.use(limiter);
 
 // Подключаемся к серверу Mongo
-mongoose.connect("mongodb://127.0.0.1:27017/mestodb");
+mongoose.connect(DB_ADDRESS);
 
 // Сборка пакетов
 app.use(bodyParser.json()); // для собирания JSON-формата
