@@ -12,7 +12,7 @@ const cors = require('cors');
 
 const app = express();
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 const mongoose = require('mongoose');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
