@@ -53,6 +53,7 @@ const userSchema = new mongoose.Schema(
 );
 
 // метод схемы для проверки почты и пароля
+// eslint-disable-next-line func-names
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email })
     .select('+password')

@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 // Заголовки безопасности проставляются автоматически(безопасность)
 const helmet = require('helmet');
-// const cors = require('cors');
+const cors = require('cors');
 
 const app = express();
 
@@ -16,26 +16,26 @@ const { PORT = 3000 } = process.env;
 const mongoose = require('mongoose');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
-// const limiter = require('./middlewares/rateLimiter');
+const limiter = require('./middlewares/rateLimiter');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const handleErrors = require('./middlewares/handleErrors');
 const { DB_ADDRESS } = require('./config');
 
-// app.use(
-//   cors({
-//     origin: [
-//       'http://localhost:3000',
-//       'https://milenairon.nomoredomainsmonster.ru',
-//     ],
-//     credentials: true,
-//     maxAge: 30,
-//   }),
-// );
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://milenairon.nomoredomainsmonster.ru',
+    ],
+    credentials: true,
+    maxAge: 30,
+  }),
+);
 
 app.use(helmet());
 app.use(cookieParser());
-// app.use(limiter);
+app.use(limiter);
 
 // Подключаемся к серверу Mongo
 mongoose.connect(DB_ADDRESS);
