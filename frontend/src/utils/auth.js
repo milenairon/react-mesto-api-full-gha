@@ -17,7 +17,9 @@ export const register = (email, password) => {
         console.log("Некорректно заполнено одно из полей");
         return Promise.reject(res.status);
       } else if (res.status === 409) {
-        console.log("При регистрации указан email, который уже существует на сервере");
+        console.log(
+          "При регистрации указан email, который уже существует на сервере"
+        );
         return Promise.reject(res.status);
       } else {
         return Promise.reject(res.status);
@@ -56,13 +58,13 @@ export const authorize = (email, password) => {
 };
 
 //Проверить валидность токена
-export const checkValidityToken = () => {
+export const checkValidityToken = (jwt) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      Authorization: `Bearer ${jwt}`,
     },
   })
     .then((res) => {

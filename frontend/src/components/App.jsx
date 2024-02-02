@@ -185,37 +185,7 @@ export default function App() {
       };
     }
   }, [isSomePopupOpen]);
-
-  // данные пользователя
-  React.useEffect(() => {
-    if (loggedIn) {
-      api
-        .getUserInfo()
-        .then((user) => {
-          setCurrentUser(user);
-        })
-        .catch((error) => {
-          //если запрос не ушел
-          console.log(error);
-        });
-    }
-  }, [loggedIn]);
-
-  // вставляем карточки с сервера
-  React.useEffect(() => {
-    if (loggedIn) {
-      api
-        .getAllCards()
-        .then((cardList) => {
-          setCards(cardList.data);
-        })
-        .catch((error) => {
-          //если запрос не ушел
-          console.log(error);
-        });
-    }
-  }, [loggedIn]);
-
+  /////////////////////////////////////////////////////////////////НЕ ЛИСТАЙ ВВЕРХБ ТАМ НИЧЕГО
   //ПРОВЕРКА ТОКЕНА
   function tokenCheck() {
     // если у пользователя есть токен в localStorage,
@@ -224,13 +194,14 @@ export default function App() {
     if (jwt) {
       // проверим токен
       auth
-        .checkValidityToken()
+        .checkValidityToken(jwt)
         .then((res) => {
           if (res) {
             // авторизуем пользователя
             setLoggedIn(true);
             navigate("/main", { replace: true });
             setEmailName(res.email);
+            console.log("токен");
           }
         })
         .catch((error) => {
@@ -240,10 +211,132 @@ export default function App() {
     }
   }
 
-  //ПРОВЕРКА ТОКЕНА
+  // получение карточек и данных юзера
+  function getUsersACards() {
+    console.log("getUsersACards");
+    if (loggedIn) {
+      Promise.all([api.getUserInfo(), api.getAllCards()]).then(
+        ([user, cardList]) => {
+          setCurrentUser(user);
+          setCards(cardList.data);
+        }
+      );
+    }
+  }
+  async function asyncCall() {
+    try {
+      await tokenCheck(); // токен
+      await getUsersACards(); // получение карточек и данных юзера
+    } catch (err) {
+      console.error(err);
+    }
+  }
   React.useEffect(() => {
-    tokenCheck();
-  }, []);
+    asyncCall();
+  }, [navigate]);
+
+  // function setUserInfo111() {
+  //   console.log("данные пользователя");
+  //   api
+  //     .getUserInfo()
+  //     .then((user) => {
+  //       setCurrentUser(user);
+  //     })
+  //     .catch((error) => {
+  //       //если запрос не ушел
+  //       console.log(error);
+  //     });
+  // }
+
+  // function setCards111() {
+  //   console.log("карточки");
+  //   api
+  //     .getAllCards()
+  //     .then((cardList) => {
+  //       setCards(cardList.data);
+  //     })
+  //     .catch((error) => {
+  //       //если запрос не ушел
+  //       console.log(error);
+  //     });
+  // }
+
+  // React.useEffect(() => {
+  //   tokenCheck();
+  // }, []);
+
+  // данные пользователя
+  // React.useEffect(() => {
+  //   if (loggedIn) {
+  //     api
+  //       .getUserInfo()
+  //       .then((user) => {
+  //         setCurrentUser(user);
+  //       })
+  //       .catch((error) => {
+  //         //если запрос не ушел
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [loggedIn]);
+
+  // //  вставляем карточки с сервера
+  // React.useEffect(() => {
+  //   if (loggedIn) {
+  //     api
+  //       .getAllCards()
+  //       .then((cardList) => {
+  //         setCards(cardList.data);
+  //       })
+  //       .catch((error) => {
+  //         //если запрос не ушел
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [loggedIn]);
+  /////////////////////////////////////////////////////////////////НЕ ЛИСТАЙ ВНИЗ, ТАМ НИЧЕГО
+
+  // //ПРОВЕРКА ТОКЕНА
+  // function tokenCheck() {
+  //   // если у пользователя есть токен в localStorage,
+  //   // эта функция проверит валидность токена
+  //   const jwt = localStorage.getItem("jwt");
+  //   if (jwt) {
+  //     // проверим токен
+  //     return auth
+  //       .checkValidityToken()
+  //       .then((res) => {
+  //         console.log(res)
+  //         if (res) {
+  //           // авторизуем пользователя
+  //           setLoggedIn(true);
+  //           navigate("/main", { replace: true });
+  //           setEmailName(res.email);
+  //           if (loggedIn) {
+  //             console.log(loggedIn);
+  //             // Promise.all([api.getUserInfo(), api.getAllCards()]).then(
+  //             //   ([user, cardList]) => {
+  //             //     setCurrentUser(user);
+  //             //     setCards(cardList.data);
+  //             //   }
+  //             // );
+  //             api
+  //       .getUserInfo()
+  //       .then((user) => {
+  //         setCurrentUser(user);
+  //       })
+  //           }
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         //если запрос не ушел
+  //         console.log(error);
+  //       });
+  //   }
+  // }
+  // React.useEffect(() => {
+  //   tokenCheck();
+  // }, []);
 
   //ИЗМЕНЕНИЕ ИНПУТОВ
   const [formValue, setFormValue] = React.useState({
@@ -288,6 +381,87 @@ export default function App() {
         openInfoTooltipFail();
       });
   }
+  ///////////////////////////////////////////////////////////
+  // //ПРОВЕРКА ТОКЕНА
+  // function tokenCheck() {
+  //   // если у пользователя есть токен в localStorage,
+  //   // эта функция проверит валидность токена
+  //   const jwt = localStorage.getItem("jwt");
+  //   if (jwt) {
+  //     // проверим токен
+  //     return auth
+  //       .checkValidityToken()
+  //       .then((res) => {
+  //         if (res) {
+  //           // авторизуем пользователя
+  //           setLoggedIn(true);
+  //         }
+  //       })
+  //       .then((res) => {
+  //         console.log(res);
+  //         navigate("/main", { replace: true });
+  //         setEmailName(res.email);
+  //         if (loggedIn) {
+  //           console.log(loggedIn);
+  //           Promise.all([api.getUserInfo(), api.getAllCards()]).then(
+  //             ([user, cardList]) => {
+  //               setCurrentUser(user);
+  //               setCards(cardList.data);
+  //             }
+  //           );
+  //         }
+  //       })
+  //     .catch((error) => {
+  //         //если запрос не ушел
+  //         console.log(error);
+  //       });
+  //   }
+  // }
+  // React.useEffect(() => {
+  //   tokenCheck();
+  // }, []);
+
+  // //ПРОВЕРКА ТОКЕНА
+  // React.useEffect(() => {
+  //   console.log(tokenCheck());
+  //   tokenCheck().then((res) => {
+  //     console.log(res);
+  //     navigate("/main", { replace: true });
+  //     setEmailName(res.email);
+  //     if (loggedIn) {
+  //       console.log(loggedIn);
+
+  //       Promise.all([api.getUserInfo(), api.getAllCards()])
+  //         .then(([user, cardList]) => {
+  //           setCurrentUser(user);
+  //           setCards(cardList.data);
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //         });
+  // //получаем данные пользователя
+  //         api
+  //           .getUserInfo()
+  //           .then((user) => {
+  //             setCurrentUser(user);
+  //           })
+  //           .catch((error) => {
+  //             //если запрос не ушел
+  //             console.log(error);
+  //           });
+  //           //получаем карточки
+  //           api
+  //         .getAllCards()
+  //         .then((cardList) => {
+  //           setCards(cardList.data);
+  //         })
+  //         .catch((error) => {
+  //           //если запрос не ушел
+  //           console.log(error);
+  //         });
+  //     }
+  //   });
+  // }, []);
 
   return (
     <div className="app">
