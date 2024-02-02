@@ -202,7 +202,6 @@ export default function App() {
             setLoggedIn(true);
             navigate("/main", { replace: true });
             setEmailName(res.email);
-            console.log("токен");
           }
         })
         .catch((error) => {
@@ -214,7 +213,6 @@ export default function App() {
 
   // получение карточек и данных юзера
   function getUsersACards() {
-    console.log("getUsersACards");
     if (loggedIn) {
       return Promise.all([api.getUserInfo(), api.getAllCards()]).then(
         ([user, cardList]) => {
