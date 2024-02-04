@@ -86,12 +86,13 @@ app.post(
 app.use('/', auth, require('./routes/users'));
 app.use('/', auth, require('./routes/cards'));
 
-// подключаем логгер ошибок
-app.use(errorLogger);
-
+// Роут неизвестного маршрута
 app.all('*', (req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
+
+// подключаем логгер ошибок
+app.use(errorLogger);
 
 // Обработчик ошибок celebrate
 app.use(errors());
