@@ -98,7 +98,7 @@ class Api {
 }
 
 const api = new Api({
-  url: "https://api.milenairon.nomoredomainsmonster.ru", // "http://localhost:3002"
+  url: "http://localhost:3000"//"https://api.milenairon.nomoredomainsmonster.ru",
 });
 
 export default api;

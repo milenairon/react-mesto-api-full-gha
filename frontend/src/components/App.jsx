@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 //React
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
@@ -198,12 +197,17 @@ export default function App() {
         .checkValidityToken(jwt)
         .then((res) => {
           if (res) {
+            console.log("проверка токена")
             // авторизуем пользователя
+            // console.log(loggedIn)
             setLoggedIn(true);
-            navigate("/main", { replace: true });
+          // console.log(loggedIn)
             setEmailName(res.email);
+            navigate("/main", { replace: true });
+            console.log('токен конец')
           }
         })
+        .then(() => {})
         .catch((error) => {
           //если запрос не ушел
           console.log(error);
@@ -213,7 +217,9 @@ export default function App() {
 
   // получение карточек и данных юзера
   function getUsersACards() {
+    console.log(loggedIn)
     if (loggedIn) {
+      console.log("карточки")
       return Promise.all([api.getUserInfo(), api.getAllCards()]).then(
         ([user, cardList]) => {
           setCurrentUser(user);
@@ -222,7 +228,7 @@ export default function App() {
       );
     }
   }
-
+  
   async function EnterWithoutSign() {
     try {
       await tokenCheck(); // токен
@@ -231,9 +237,13 @@ export default function App() {
       console.error(err);
     }
   }
+
   React.useEffect(() => {
-    EnterWithoutSign();
-  }, [navigate]);
+    if(localStorage.getItem("jwt")) {
+      console.log('запуск юз эффекта')
+      EnterWithoutSign();
+    }
+}, [navigate]);
 
   //ИЗМЕНЕНИЕ ИНПУТОВ
   const [formValue, setFormValue] = React.useState({
@@ -323,7 +333,7 @@ export default function App() {
               path="/signin"
               element={
                 <>
-                  <Header anotherPage="Регистрация" pathPage="/sign-up" />
+                  <Header anotherPage="Регистрация" pathPage="/signup" />
                   <Login
                     onSubmit={handleSubmitLogin}
                     handleChangeInput={handleChangeInput}
@@ -334,7 +344,7 @@ export default function App() {
               }
             />
             <Route
-              path="/sign-up"
+              path="/signup"
               element={
                 <>
                   <Header anotherPage="Войти" pathPage="/signin" />
@@ -347,7 +357,7 @@ export default function App() {
                 </>
               }
             />
-            <Route path="*" element={<Navigate to="/sign-up" replace />} />
+            <Route path="*" element={<Navigate to="/signup" replace />} />
           </Routes>
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
