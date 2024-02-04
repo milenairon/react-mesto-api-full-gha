@@ -6,7 +6,7 @@
 
 <div align="center">
   <a href="https://milenairon.nomoredomainsmonster.ru">
-    <img width="600" alt="Основной экран приложения" src="https://1drv.ms/i/s!AgVpD7dZ1YIbhJ8Jq9Yj-yfemk6q_w?e=b1kgle">
+    <img width="600" alt="Основной экран приложения" src="https://sun9-14.userapi.com/impg/oZZOV3XagogeCpkV2eDvehy31E2Aq43TApzlVA/73HCl_2WRRY.jpg?size=992x637&quality=95&sign=675541fca4371d84dca18169325a05fd&type=album">
   </a>
 </div>
 

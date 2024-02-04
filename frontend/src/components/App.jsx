@@ -197,14 +197,10 @@ export default function App() {
         .checkValidityToken(jwt)
         .then((res) => {
           if (res) {
-            console.log("проверка токена")
             // авторизуем пользователя
-            // console.log(loggedIn)
             setLoggedIn(true);
-          // console.log(loggedIn)
             setEmailName(res.email);
             navigate("/main", { replace: true });
-            console.log('токен конец')
           }
         })
         .then(() => {})
@@ -217,9 +213,7 @@ export default function App() {
 
   // получение карточек и данных юзера
   function getUsersACards() {
-    console.log(loggedIn)
     if (loggedIn) {
-      console.log("карточки")
       return Promise.all([api.getUserInfo(), api.getAllCards()]).then(
         ([user, cardList]) => {
           setCurrentUser(user);
@@ -240,7 +234,6 @@ export default function App() {
 
   React.useEffect(() => {
     if(localStorage.getItem("jwt")) {
-      console.log('запуск юз эффекта')
       EnterWithoutSign();
     }
 }, [navigate]);
