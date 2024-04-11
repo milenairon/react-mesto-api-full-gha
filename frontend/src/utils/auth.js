@@ -1,4 +1,4 @@
-export const BASE_URL = "https://api.milenairon.nomoredomainsmonster.ru";
+export const BASE_URL = "http://localhost:3001"; // для сервера https://api.milenairon.nomoredomainsmonster.ru
 
 //Зарегистрировать
 export const register = (email, password) => {
